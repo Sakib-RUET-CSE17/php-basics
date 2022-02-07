@@ -10,12 +10,20 @@
 
 <body>
     <?php
-    $myfile = fopen('users.txt', "r") or die("Unable to open file!");
-    $content = '';
+    $myfile = fopen('users.csv', "r") or die("Unable to open file!");
+
+    $names = [];
+
     while (!feof($myfile)) {
-        $content .= fgets($myfile) . '<br>';
+        array_push($names, fgetcsv($myfile));
     }
-    echo $content;
+
+    // unset header row
+    unset($names[0]);
+
+    foreach ($names as $name) {
+        echo $name[1].'<br>';
+    }
     fclose($myfile);
     ?>
 </body>
