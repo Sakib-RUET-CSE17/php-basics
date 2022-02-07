@@ -10,21 +10,41 @@
 
 <body>
     <?php
-    $myfile = fopen('users.csv', "r") or die("Unable to open file!");
 
-    $names = [];
+    function getFileData($fileName)
+    {
+        $myfile = fopen($fileName, "r") or die("Unable to open file!");
 
-    while (!feof($myfile)) {
-        array_push($names, fgetcsv($myfile));
+        $data = [];
+
+        while (!feof($myfile)) {
+            array_push($data, fgetcsv($myfile));
+        }
+
+        // unset header row
+        unset($data[0]);
+
+        fclose($myfile);
+
+        return $data;
     }
 
-    // unset header row
-    unset($names[0]);
+    // $myfile = fopen('users.csv', "r") or die("Unable to open file!");
 
-    foreach ($names as $name) {
-        echo $name[1].'<br>';
+    // $names = [];
+
+    // while (!feof($myfile)) {
+    //     array_push($names, fgetcsv($myfile));
+    // }
+
+    // // unset header row
+    // unset($names[0]);
+
+    $data = getFileData('users.csv');
+    foreach ($data as $row) {
+        echo $row[1] . '<br>';
     }
-    fclose($myfile);
+
     ?>
 </body>
 
