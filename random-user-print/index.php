@@ -40,10 +40,15 @@
     // // unset header row
     // unset($names[0]);
 
+
+
     $data = getFileData('users.csv');
-    foreach ($data as $row) {
+
+    function printName($row)
+    {
         echo $row[1] . '<br>';
     }
+    array_map('printName', $data)
 
     ?>
 </body>
